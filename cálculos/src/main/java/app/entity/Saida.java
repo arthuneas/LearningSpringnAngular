@@ -13,8 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Entrada {
+public class Saida {
 	
-	private List<Integer> lista;
-	
+	private Integer soma;
+	private int maiorNumeroLista;	
+
 }

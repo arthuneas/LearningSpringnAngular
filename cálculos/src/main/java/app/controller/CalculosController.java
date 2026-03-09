@@ -17,44 +17,51 @@ import app.service.CalculosService;
 @RestController
 @RequestMapping("/api/calculos")
 public class CalculosController {
-	
-	@Autowired //evita allocação de memoria excedente
+
+	@Autowired // evita allocação de memoria excedente
 	private CalculosService calculosService;
-	
-	
+
 	@PostMapping
-	public ResponseEntity<Saida> calcular(@RequestBody Entrada entrada){ //entrada é uma lista do tipo Entrada
-		
+	public ResponseEntity<Saida> calcular(@RequestBody Entrada entrada) { // entrada é uma lista do tipo Entrada
+
 		try {
-			
 			Saida resultado = this.calculosService.calcular(entrada);
-			
-			return ResponseEntity.status(201).body(resultado); //mandamos os status e o resultado da requisiçao			
-			
+			return ResponseEntity.status(201).body(resultado); // mandamos os status e o resultado da requisiçao
+
 		} catch (Exception e) {
-			
-			return ResponseEntity.badRequest().build();				
-			
-		}
-		
-	}
-	
-	@GetMapping
-	public ResponseEntity<List<Saida>> findAll(){ //entrada é uma lista do tipo Entrada
-		
-		try {
-			
-			List<Saida> lista = this.calculosService.findAll();		
-			return ResponseEntity.ok(lista); //mandamos os status e o resultado da requisiçao
-			
-			
-		} catch (Exception e) {
-			
 			return ResponseEntity.badRequest().build();
-					
+
 		}
-		
+
 	}
-	
-	
+
+	@GetMapping
+	public ResponseEntity<List<Saida>> findAll() { // entrada é uma lista do tipo Entrada
+
+		try {
+
+			List<Saida> lista = this.calculosService.findAll();
+			return ResponseEntity.ok(lista); // mandamos os status e o resultado da requisiçao
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+
+		}
+
+	}
+
+	public ResponseEntity<Saida> findById(Long id) { // entrada é uma lista do tipo Entrada
+
+		try {
+
+			Saida objeto = this.calculosService.findById(id);
+			return ResponseEntity.ok(objeto); // mandamos os status e o resultado da requisiçao
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+
+		}
+
+	}
+
 }

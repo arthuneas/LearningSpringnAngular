@@ -12,30 +12,55 @@ import app.repository.CalculosRepository;
 
 @Service
 public class CalculosService {
-	
+
 	@Autowired
 	CalculosRepository calculosRepository;
-	
+
+	public int somar(List<Integer> lista) {
+
+		int soma = 0;
+
+		if (lista != null && !lista.isEmpty()) {
+
+			for (Integer numero : lista) {
+
+				soma += numero;
+
+			}
+		}
+
+		return soma;
+	}
+
+	public int buscarMaiorNumero(List<Integer> lista) {
+
+		int maior = 0;
+
+		if (lista != null && !lista.isEmpty()) {
+			maior = Collections.max(lista);
+		}
+
+		return maior;
+	}
 
 	public Saida calcular(Entrada entrada) {
 		Saida saida = new Saida();
-		
-		List<Integer> lista = entrada.getLista();
-		
-		int soma = lista.stream().mapToInt(Integer::intValue).sum();
-		int maior = lista.stream().max(Integer::compare).orElse(0);
-		
+
 		// Guarda os valores calculados no objeto que será retornado
-		saida.setSoma(soma);
-		saida.setMaiorNumeroLista(maior);
-		
-		return this.calculosRepository.save(saida);
+		saida.setSoma(this.somar(entrada.getLista()));
+		saida.setMaiorNumeroLista(this.buscarMaiorNumero(entrada.getLista()));
+
+		// saida = this.calculosRepository.save(saida);
+
+		return saida;
 	}
-	
-	
+
 	public List<Saida> findAll() {
-		List<Saida> lista = calculosRepository.findAll();
-		return lista;
+		return this.calculosRepository.findAll();
 	}
-		
+
+	public Saida findById(Long id) {
+		return this.calculosRepository.findById(id).get();
+	}
+
 }
